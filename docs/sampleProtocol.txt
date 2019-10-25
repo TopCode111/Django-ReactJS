@@ -1,0 +1,12 @@
+
+Protocol SQL table
+
+   - protocol 1 (ID = 1)
+   - protocol 2 (ID = 2)
+   - protocol 3 (ID = 3)
+   
+   
+Medidcal questioms SQL table
+
+   - Question 1, "How is your heart filling?", "Yes/No Question" belongs to protocol 2 (foreign key ID = 2)
+   - Question 2, "Do you take medicine everyday?", "Yes/No Question" belongs to protocol 1 (foreign key ID = 1)

@@ -1,0 +1,48 @@
+{
+  "name": "Monica_2019",
+  "version": "1.0.0",
+  "description": "MVP for telemedicine, known as **Monica**.",
+  "main": "index.js",
+  "scripts": {
+    "dev": "webpack --mode development --watch ./frontend/src/index.js --output ./frontend/static/frontend/main.js",
+    "build": "webpack --mode production ./frontend/src/index.js --output ./frontend/static/frontend/main.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/student-t/Monica_2019.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/student-t/Monica_2019/issues"
+  },
+  "homepage": "https://github.com/student-t/Monica_2019#readme",
+  "devDependencies": {
+    "@babel/core": "^7.5.4",
+    "@babel/preset-env": "^7.5.4",
+    "@babel/preset-react": "^7.0.0",
+    "babel-loader": "^8.0.6",
+    "babel-plugin-transform-class-properties": "^6.24.1",
+    "webpack": "^4.35.3",
+    "webpack-cli": "^3.3.5"
+  },
+  "dependencies": {
+    "axios": "^0.19.0",
+    "promise": "^8.0.3",
+    "prop-types": "^15.7.2",
+    "rc-progress": "^2.5.1",
+    "rc-tooltip": "^3.7.3",
+    "react": "^16.8.6",
+    "react-bootstrap-table-next": "^3.1.7",
+    "react-bootstrap-table2-toolkit": "^2.0.1",
+    "react-dom": "^16.8.6",
+    "react-redux": "^7.1.0",
+    "react-router-dom": "^5.0.1",
+    "react-select": "^3.0.4",
+    "react-stepzilla": "^6.0.0",
+    "redux": "^4.0.4",
+    "redux-devtools-extension": "^2.13.8",
+    "redux-thunk": "^2.3.0"
+  }
+}
