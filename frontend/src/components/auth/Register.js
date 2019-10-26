@@ -17,148 +17,12 @@ class RegisterStepOne extends Component {
   isValidated() {
     this.props.validateField('first_name', this.props.newUser.first_name);
     this.props.validateField('last_name', this.props.newUser.last_name);
-    return this.props.validation.first_name && this.props.validation.last_name;
-  }
-
-  render() {
-    return (
-      <form className="pure-form pure-form-stacked">
-        <label className="left" htmlFor="firstName">First name</label>
-        <div className="validation-input">
-        <Tooltip
-                            visible={this.props.formErrors.first_name.length > 0}
-                            trigger={[]}
-                            overlayStyle={{ zIndex: 1000 }}
-                            overlay={<span>{this.props.formErrors.first_name}</span>}
-                        >
-          <input id="first_name" name="first_name" value={this.props.newUser.first_name} onChange={this.props.onChange} className="register-width" type="text" />
-          </Tooltip>
-          <span className={'checkmark ' + ((this.props.validation.first_name) ? '' : 'hide')}>
-            <div className="checkmark_circle"></div>
-            <div className="checkmark_stem"></div>
-            <div className="checkmark_kick"></div>
-          </span>
-          <span className={'checkmark ' + ((this.props.formErrors.first_name.length > 0) ? '' : 'hide')}>
-              <div className="checkmark_circle_error"></div>
-              <div className="checkmark_stem_error"></div>
-              <div className="checkmark_kick_error"></div>
-            </span>
-        </div>
-        <label className="left" htmlFor="lastName">Last name</label>
-        <div className="validation-input">
-        <Tooltip
-                            visible={this.props.formErrors.last_name.length > 0}
-                            trigger={[]}
-                            overlayStyle={{ zIndex: 1000 }}
-                            overlay={<span>{this.props.formErrors.last_name}</span>}
-                        >
-          <input id="last_name" name="last_name" value={this.props.newUser.last_name} onChange={this.props.onChange} className="lastName register-width" type="text" />
-          </Tooltip>
-          <span className={'checkmark ' + ((this.props.validation.last_name) ? '' : 'hide')}>
-            <div className="checkmark_circle"></div>
-            <div className="checkmark_stem"></div>
-            <div className="checkmark_kick"></div>
-          </span>
-          <span className={'checkmark ' + ((this.props.formErrors.last_name.length > 0) ? '' : 'hide')}>
-              <div className="checkmark_circle_error"></div>
-              <div className="checkmark_stem_error"></div>
-              <div className="checkmark_kick_error"></div>
-            </span>
-        </div>
-      </form>
-    )
-  }
-}
-
-class RegisterStepTwo extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  isValidated() {
-    this.props.validateField('email', this.props.newUser.email);
-    this.props.validateField('phone', this.props.newUser.phone);
-    return this.props.validation.email;
-  }
-
-  goBack() {
-    this.props.jumpToStep(this.props.step-1);
-  }
-
-
-  render() {
-    return (
-      <form className="pure-form pure-form-stacked">
-
-        <label className="left" htmlFor="email">Email</label>
-        <div className="validation-input">
-        <Tooltip
-                            visible={this.props.formErrors.email.length > 0}
-                            trigger={[]}
-                            overlayStyle={{ zIndex: 1000 }}
-                            overlay={<span>{this.props.formErrors.email}</span>}
-                        >
-          <input id="email" name="email" value={this.props.newUser.email} onChange={this.props.onChange} className="register-width" type="text" />
-          </Tooltip>
-          <span className={'checkmark ' + ((this.props.validation.email) ? '' : 'hide')}>
-            <div className="checkmark_circle"></div>
-            <div className="checkmark_stem"></div>
-            <div className="checkmark_kick"></div>
-          </span>
-          <span className={'checkmark ' + ((this.props.formErrors.email.length > 0) ? '' : 'hide')}>
-              <div className="checkmark_circle_error"></div>
-              <div className="checkmark_stem_error"></div>
-              <div className="checkmark_kick_error"></div>
-            </span>
-        </div>
-        <label className="left" htmlFor="phone">Phone</label>
-        <div className="validation-input">
-        <Tooltip
-                            visible={this.props.formErrors.phone.length > 0}
-                            trigger={[]}
-                            overlayStyle={{ zIndex: 1000 }}
-                            overlay={<span>{this.props.formErrors.phone}</span>}
-                        >
-          <input id="phone" name="phone" value={this.props.newUser.phone} onChange={this.props.onChange} className="register-width" type="text" />
-          </Tooltip>
-          <span className={'checkmark ' + ((this.props.validation.phone) ? '' : 'hide')}>
-            <div className="checkmark_circle"></div>
-            <div className="checkmark_stem"></div>
-            <div className="checkmark_kick"></div>
-          </span>
-          <span className={'checkmark ' + ((this.props.formErrors.phone.length > 0) ? '' : 'hide')}>
-              <div className="checkmark_circle_error"></div>
-              <div className="checkmark_stem_error"></div>
-              <div className="checkmark_kick_error"></div>
-            </span>
-        </div>
-
-      </form>
-    )
-  }
-}
-
-class RegisterStepThree extends Component {
-
-  constructor(props) {
-    super(props);
-  }
-
-  goBack() {
-    this.props.jumpToStep(this.props.step-1);
-  }
-
-  isValidated() {
     this.props.validateDate(this.props.newUser.date);
     this.props.validateMonth(this.props.newUser.month);
-    this.props.validateYear(this.props.newUser.year);
-    this.props.validateField('password', this.props.newUser.password);
-
-    return this.props.validation.date && this.props.validation.month && this.props.validation.year && this.props.validation.password;
+    this.props.validateYear(this.props.newUser.year);  
+    return this.props.validation.first_name && this.props.validation.last_name && this.props.validation.date && this.props.validation.month && this.props.validation.year;
   }
-
-
+  
   render() {
     let dates = [
       { value: '01', label: '01' },
@@ -244,9 +108,50 @@ class RegisterStepThree extends Component {
     ]
 
     return (
-      <form className="pure-form pure-form-stacked register-width">
+      <form className="pure-form pure-form-stacked">
+        <label className="left" htmlFor="firstName">First name</label>
+        <div className="validation-input">
+        <Tooltip
+                            visible={this.props.formErrors.first_name.length > 0}
+                            trigger={[]}
+                            overlayStyle={{ zIndex: 1000 }}
+                            overlay={<span>{this.props.formErrors.first_name}</span>}
+                        >
+          <input id="first_name" name="first_name" value={this.props.newUser.first_name} onChange={this.props.onChange} className="register-width" type="text" />
+          </Tooltip>
+          <span className={'checkmark ' + ((this.props.validation.first_name) ? '' : 'hide')}>
+            <div className="checkmark_circle"></div>
+            <div className="checkmark_stem"></div>
+            <div className="checkmark_kick"></div>
+          </span>
+          <span className={'checkmark ' + ((this.props.formErrors.first_name.length > 0) ? '' : 'hide')}>
+              <div className="checkmark_circle_error"></div>
+              <div className="checkmark_stem_error"></div>
+              <div className="checkmark_kick_error"></div>
+            </span>
+        </div>
+        <label className="left" htmlFor="lastName">Last name</label>
+        <div className="validation-input">
+        <Tooltip
+                            visible={this.props.formErrors.last_name.length > 0}
+                            trigger={[]}
+                            overlayStyle={{ zIndex: 1000 }}
+                            overlay={<span>{this.props.formErrors.last_name}</span>}
+                        >
+          <input id="last_name" name="last_name" value={this.props.newUser.last_name} onChange={this.props.onChange} className="lastName register-width" type="text" />
+          </Tooltip>
+          <span className={'checkmark ' + ((this.props.validation.last_name) ? '' : 'hide')}>
+            <div className="checkmark_circle"></div>
+            <div className="checkmark_stem"></div>
+            <div className="checkmark_kick"></div>
+          </span>
+          <span className={'checkmark ' + ((this.props.formErrors.last_name.length > 0) ? '' : 'hide')}>
+              <div className="checkmark_circle_error"></div>
+              <div className="checkmark_stem_error"></div>
+              <div className="checkmark_kick_error"></div>
+            </span>
+        </div>
         <label className="left" htmlFor="date">Date of birth</label>
-
         <div className="validation-input">
 
           <div className="date">
@@ -300,6 +205,107 @@ class RegisterStepThree extends Component {
             </span>
           </div>
         </div>
+      </form>
+    )
+  }
+}
+
+class RegisterStepTwo extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  isValidated() {
+    this.props.validateField('email', this.props.newUser.email);
+    this.props.validateField('phone', this.props.newUser.phone);
+    return this.props.validation.email;
+  }
+
+  goBack() {
+    this.props.jumpToStep(this.props.step-1);
+  }
+
+
+  render() {
+    return (
+      <form className="pure-form pure-form-stacked">
+
+        <label className="left" htmlFor="email">Email</label>
+        <div className="validation-input">
+        <Tooltip
+                            visible={this.props.formErrors.email.length > 0}
+                            trigger={[]}
+                            overlayStyle={{ zIndex: 1000 }}
+                            overlay={<span>{this.props.formErrors.email}</span>}
+                        >
+          <input id="email" name="email" value={this.props.newUser.email} onChange={this.props.onChange} className="register-width" type="text" />
+          </Tooltip>
+          <span className={'checkmark ' + ((this.props.validation.email) ? '' : 'hide')}>
+            <div className="checkmark_circle"></div>
+            <div className="checkmark_stem"></div>
+            <div className="checkmark_kick"></div>
+          </span>
+          <span className={'checkmark ' + ((this.props.formErrors.email.length > 0) ? '' : 'hide')}>
+              <div className="checkmark_circle_error"></div>
+              <div className="checkmark_stem_error"></div>
+              <div className="checkmark_kick_error"></div>
+            </span>
+        </div>
+        <label className="left" htmlFor="phone">Phone</label>
+        <div className="validation-input">
+        <Tooltip
+                            visible={this.props.formErrors.phone.length > 0}
+                            trigger={[]}
+                            overlayStyle={{ zIndex: 1000 }}
+                            overlay={<span>{this.props.formErrors.phone}</span>}
+                        >
+          <input id="phone" name="phone" value={this.props.newUser.phone} onChange={this.props.onChange} className="register-width" type="text" />
+          </Tooltip>
+          <span className={'checkmark ' + ((this.props.validation.phone) ? '' : 'hide')}>
+            <div className="checkmark_circle"></div>
+            <div className="checkmark_stem"></div>
+            <div className="checkmark_kick"></div>
+          </span>
+          <span className={'checkmark ' + ((this.props.formErrors.phone.length > 0) ? '' : 'hide')}>
+              <div className="checkmark_circle_error"></div>
+              <div className="checkmark_stem_error"></div>
+              <div className="checkmark_kick_error"></div>
+            </span>
+        </div>
+
+      </form>
+    )
+  }
+}
+
+class RegisterStepThree extends Component {
+
+  constructor(props) {
+    super(props);
+  }
+
+  goBack() {
+    this.props.jumpToStep(this.props.step-1);
+  }
+
+   isValidated() {
+  //   this.props.validateDate(this.props.newUser.date);
+  //   this.props.validateMonth(this.props.newUser.month);
+  //   this.props.validateYear(this.props.newUser.year);
+    this.props.validateField('password', this.props.newUser.password);
+
+    return this.props.validation.password;
+   }
+
+
+  render() {
+    
+    return (
+      <form className="pure-form pure-form-stacked register-width">
+       
+
+        
         <div>
         {/* <label className="right error-message">{this.props.formErrors.date}</label> */}
         </div>
@@ -1061,9 +1067,9 @@ export class Register extends Component {
     const { serverErrors, isAuthenticated } = this.state;
 
     const steps = [
-      { name: 'RegisterStepOne', component: <RegisterStepOne newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} validateField={this.validateField}/> },
+      { name: 'RegisterStepOne', component: <RegisterStepOne newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} validateField={this.validateField} onDateChange={this.onDateChange} onMonthChange={this.onMonthChange} onYearChange={this.onYearChange} validateDate={this.validateDate} validateMonth={this.validateMonth} validateYear={this.validateYear} /> },
       { name: 'RegisterStepTwo', component: <RegisterStepTwo step={this.state.step} newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} validateField={this.validateField}/> },
-      { name: 'RegisterStepThree', component: <RegisterStepThree step={this.state.step} {...this.state} onChange={this.onChange} onDateChange={this.onDateChange} onMonthChange={this.onMonthChange} onYearChange={this.onYearChange} validateField={this.validateField} validateDate={this.validateDate} validateMonth={this.validateMonth} validateYear={this.validateYear} /> },
+      { name: 'RegisterStepThree', component: <RegisterStepThree step={this.state.step} {...this.state} onChange={this.onChange}  validateField={this.validateField} /> },
       { name: 'RegisterStepFour', component: <RegisterStepFour step={this.state.step} newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} onStateChange={this.onStateChange} onCountryChange={this.onCountryChange} validateField={this.validateField} validateCountry={this.validateCountry} validateState={this.validateState} /> },
       { name: 'RegisterStepFive', component: <RegisterStepFive step={this.state.step} newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} onSpecialityChange={this.onSpecialityChange} signup={this.props.signup} validateSpeciality={this.validateSpeciality} /> },
       { name: 'RegisterStepSix', component: <RegisterStepSix serverErrors={serverErrors} step={this.state.step}  newUser={this.state.newUser.first_name} isAuthenticated={isAuthenticated} /> }
