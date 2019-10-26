@@ -20,7 +20,7 @@ export default class Header extends Component {
             onClick={() => this.props.backToStep()}
           >
             {" "}
-            
+            Back
           </div>
         )}
         {this.props.shouldShowHome && (
@@ -28,7 +28,7 @@ export default class Header extends Component {
             className="header-element"
             onClick={() => (window.location.href = "/")}
           >
-            
+            Home
           </div>
         )}
       </div>

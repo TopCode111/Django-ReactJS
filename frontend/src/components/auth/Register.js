@@ -534,7 +534,7 @@ class RegisterStepFive extends Component {
             </span>
         </div>
 
-        <label className="left other" htmlFor="other">Other</label>
+        <label className="left other" htmlFor="other">Disease of interest</label>
         <div className="validation-input">
           <input id="other" className="register-width" type="text" />
 
@@ -558,7 +558,7 @@ class RegisterStepSix extends Component {
     if (this.props.isAuthenticated) {
       return (
         <h2>
-          Welcome {this.props.newUser.first_name}, signup successful. Go to your  <Link to="/dashboard">dashboard</Link>
+          Thank you for registering to Telemonica, we will get back to you soon to start the project. If you have any question please contact us. 
         </h2>
       )
     } else {
