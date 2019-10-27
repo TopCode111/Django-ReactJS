@@ -40,7 +40,7 @@ const Landing = ({ auth }) => {
               src="static/frontend/images/icon.png"
             />
           </div>
-          <span className="intro" style="font">            The solution to simply create registries and follow-up patients.
+          <span className="intro" >            The solution to simply create registries and follow-up patients.
           </span>
           <br />
           <button className="primary-btn learn-more">Learn More</button>

@@ -260,14 +260,14 @@ class RegisterStepTwo extends Component {
                             overlayStyle={{ zIndex: 1000 }}
                             overlay={<span>{this.props.formErrors.phone}</span>}
                         >
-          <input id="phone" name="phone" value={this.props.newUser.phone} onChange={this.props.onChange} className="register-width" type="text" />
+          <input id="phone" name="phone" value={this.props.newUser.phone} onChange={this.props.onChange} className="register-width" type="number" />
           </Tooltip>
           <span className={'checkmark ' + ((this.props.validation.phone) ? '' : 'hide')}>
             <div className="checkmark_circle"></div>
             <div className="checkmark_stem"></div>
             <div className="checkmark_kick"></div>
           </span>
-          <span className={'checkmark ' + ((this.props.formErrors.phone.length > 0) ? '' : 'hide')}>
+          <span className={'checkmark ' + ((this.props.formErrors.phone.length > 6) ? '' : 'hide')}>
               <div className="checkmark_circle_error"></div>
               <div className="checkmark_stem_error"></div>
               <div className="checkmark_kick_error"></div>
@@ -873,12 +873,13 @@ export class Register extends Component {
     let phoneValid = this.state.validation.phone;
 
     let re = /[\+0-9]+/
-    phoneValid = phone.length > 0;
-    fieldValidationErrors.phone = phoneValid ? '' : 'Phone number is required';
-    if(phone.length > 8){
-      phoneValid = re.test(phone)
-      fieldValidationErrors.phone = phoneValid ? '' : 'Invalid phone number';
-    }
+    phoneValid = phone.length < 7;
+    fieldValidationErrors.phone = phoneValid ? 'Phone number is required' : '';
+    
+    // if(phone.length < 10){
+    //   phoneValid = re.test(phone)
+    //   fieldValidationErrors.phone = phoneValid ? '' : 'Invalid phone number';
+    // }
 
     this.setState({
       formErrors: fieldValidationErrors,
