@@ -52,7 +52,8 @@ export default function (state = initialState, action) {
       return {
         ...state,
         isQuestionLoading: false,
-        questions: action.payload
+        questions: action.payload.questions,
+        full_name: action.payload.patient
       };
     case QUESTIONS_LOADING:
       return {
