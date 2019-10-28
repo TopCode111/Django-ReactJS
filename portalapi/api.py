@@ -1,3 +1,4 @@
+import datetime
 from rest_framework import generics, permissions, viewsets, status
 from rest_framework.response import Response
 from django.shortcuts import get_object_or_404
@@ -27,7 +28,11 @@ class PatientAPI(generics.GenericAPIView):
         patient = serializer.create(request.data)
         token = account_activation_token.make_token(patient.user)
         uid = urlsafe_base64_encode(force_bytes(patient.user.pk))
-        handler.send_email(patient.user.email, request.build_absolute_uri('/') + '#/survey/' + uid + '/' + account_activation_token.make_token(patient.user) )
+        
+        today = datetime.date.today()
+        date = today + datetime.timedelta( (4-today.weekday()) % 7 ) # TODO: Fix this according to settings
+        
+        handler.send_email(patient.user.first_name + " " + patient.user.last_name, patient.user.email, date.strftime('%Y %B %d'), request.build_absolute_uri('/') + '#/survey/' + uid + '/' + account_activation_token.make_token(patient.user))
         return Response({
             "patient": PatientSerializer(patient, context=self.get_serializer_context()).data
         })
@@ -77,11 +82,11 @@ class MedicalSurveyAPI(generics.GenericAPIView):
         if(account_activation_token.check_token(user, token)):
             patient = Patient.objects.get(user_id=uid)
 
-            return Response(MedicalQuestionsSerializer(patient.protocol.medicalquestions_set.all(), many=True).data)
+            serialized = MedicalQuestionsSerializer(patient.protocol.medicalquestions_set.all(), many=True)
+            return Response({'questions': serialized.data, 'patient': '{} {}'.format(patient.user.first_name, patient.user.last_name)})
         return Response([])
     
-    def post(self, request, *args, **kwargs):
-        
+    def post(self, request, *args, **kwargs):        
         uid = force_bytes(urlsafe_base64_decode(kwargs['uidb64']))
         token = kwargs['token']
         user = User.objects.get(pk=uid)
@@ -90,8 +95,7 @@ class MedicalSurveyAPI(generics.GenericAPIView):
             serializer = MedicalQuestionsSerializer(data=request.data, many=True)
             if(serializer.is_valid()):
                 for data in request.data:
-                    print(data)
-                    PatientAnswers.objects.create(patient=patient, question_id=data['id'], answer=data['answer'])
+                    PatientAnswers.objects.update_or_create(patient=patient, question_id=data['id'], defaults= {'answer': data['answer']} )
 
             return Response(MedicalQuestionsSerializer(patient.protocol.medicalquestions_set.all(), many=True).data)
         return Response([])

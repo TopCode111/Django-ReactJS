@@ -1,17 +1,14 @@
+from django.conf import settings
 from django.core.mail import send_mail
 from django.contrib.auth.tokens import PasswordResetTokenGenerator
 
-from django.conf import settings
-
-def send_email(email, path):
+def send_email(name, email, date, path):
     send_mail(
-        'Test',
+        'Telemonica 360',
         """
-        You have been registerd to TeleMonica.
-        Email: {0}
-        Please log in to {1} and use the application.
-        """.format(email, path),
+        Dear {0}, you agreed on {1} to have regular follow-up by your doctor. Please click on this link to
+        start the questionnaire: {2}.If you encounter any technical problem please contact Telemonica
+        Support Centre.""".format(name, date, path),
         settings.EMAIL_HOST_USER,
         [email]
     )
-
