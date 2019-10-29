@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import { connect } from "react-redux";
 import PropTypes from "prop-types";
 import { logout } from "../../actions/auth";
+
 export class Logout extends Component {
   static propTypes = {
     auth: PropTypes.object.isRequired,
@@ -10,7 +11,7 @@ export class Logout extends Component {
   render() {
       return (
           <span onClick={this.props.logout} >
-            Logout
+            Log out
           </span>
     );
   }
