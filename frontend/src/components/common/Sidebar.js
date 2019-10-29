@@ -14,7 +14,6 @@ export default class Sidebar extends Component {
                     <li className="sidebar-item"><NavLink to="/account" activeClassName="active" className="link-btn"><i className="material-icons sidebar-margin">person_pin</i><span className="sidebar-margin">Account</span></NavLink></li>
                     <li className="sidebar-item"><NavLink to="/help" activeClassName="active" className="link-btn"><i className="material-icons sidebar-margin">help_outline</i><span className="sidebar-margin">Help</span></NavLink></li>
                     <li className="sidebar-item"><NavLink to="/data" activeClassName="active" className="link-btn"><i className="material-icons sidebar-margin">equalizer</i><span className="sidebar-margin">Data</span></NavLink></li>
-                    <li className="sidebar-item"><NavLink to="/admin" activeClassName="active" className="link-btn"><i className="material-icons sidebar-margin"></i><span className="sidebar-margin">Admin</span></NavLink></li>
                 </ul>
             )
         } else {
