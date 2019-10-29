@@ -33,11 +33,22 @@ button {
   color: #53206e;
 }
 
+.export-csv-button {
+	position: absolute;
+	right: 90px;
+}
+
+.title {
+	font-size: 40px;
+	font-weight: bold;
+	margin-bottom: 20px;
+}
+
 .intro {
   width: 579px;
   height: 160px;
   font-family: "Overpass";
-  font-size: 26px;
+  font-size: 22px;
   font-weight: 600;
   font-style: normal;
   font-stretch: normal;
@@ -352,7 +363,7 @@ a {
   position: absolute;
   width: 34px;
   height: 34px;
-  border: solid 2.5px #be6464;
+  border: solid 2.5px #BE6464;
   border-radius: 20px;
   left: 0;
   top: 0;
@@ -362,7 +373,7 @@ a {
   position: absolute;
   width: 3px;
   height: 23px;
-  background-color: #be6464;
+  background-color: #BE6464;
   left: 18px;
   top: 9px;
 }
@@ -371,7 +382,7 @@ a {
   position: absolute;
   width: 23px;
   height: 3px;
-  background-color: #be6464;
+  background-color: #BE6464;
   left: 8px;
   top: 19px;
 }
@@ -462,6 +473,11 @@ a {
 .footer-buttons {
   text-align: center;
   margin-top: 2%;
+}
+
+.sidebar-margin {
+  vertical-align:middle;
+  margin-left: 10px;	
 }
 
 .prev-btn {
@@ -630,6 +646,12 @@ input#register-passcode {
   margin: 0 50px;
 }
 
+.dashboard-container .logout {
+  font-size: 22px;
+  position: absolute;
+  right: 100px;
+}
+
 .dashboard-heading {
   margin-top: 0;
   font-family: Overpass;
@@ -647,6 +669,14 @@ input#register-passcode {
   margin-top: 20px;
 }
 
+.landing-child {
+	width: 100%;
+}
+
+.icon-parent {
+	height: 150px;
+}
+
 .landing-icon {
   width: 150px;
   position: fixed;
@@ -654,7 +684,8 @@ input#register-passcode {
 }
 
 .dashboard-icon {
-  width: 100px;
+	width:150px;
+	margin-left:7px;
 }
 
 .logout {
@@ -1301,31 +1332,31 @@ tbody::-webkit-scrollbar-track {
 .rc-tooltip-placement-bottom .rc-tooltip-arrow,
 .rc-tooltip-placement-bottomLeft .rc-tooltip-arrow,
 .rc-tooltip-placement-bottomRight .rc-tooltip-arrow {
-  border-bottom-color: #be6464 !important;
+  border-bottom-color: #BE6464 !important;
 }
 .rc-tooltip-placement-top .rc-tooltip-arrow,
 .rc-tooltip-placement-topLeft .rc-tooltip-arrow,
 .rc-tooltip-placement-topRight .rc-tooltip-arrow {
-  border-top-color: #be6464 !important;
+  border-top-color: #BE6464 !important;
 }
 .rc-tooltip-placement-right .rc-tooltip-arrow,
 .rc-tooltip-placement-rightTop .rc-tooltip-arrow,
 .rc-tooltip-placement-rightBottom .rc-tooltip-arrow {
-  border-right-color: #be6464 !important;
+  border-right-color: #BE6464 !important;
 }
 .rc-tooltip-placement-left .rc-tooltip-arrow,
 .rc-tooltip-placement-leftTop .rc-tooltip-arrow,
 .rc-tooltip-placement-leftBottom .rc-tooltip-arrow {
-  border-left-color: #be6464 !important;
+  border-left-color: #BE6464 !important;
 }
 .rc-tooltip-placement-bottom .rc-tooltip-arrow,
 .rc-tooltip-placement-bottomLeft .rc-tooltip-arrow,
 .rc-tooltip-placement-bottomRight .rc-tooltip-arrow {
-  border-bottom-color: #be6464 !important;
+  border-bottom-color: #BE6464 !important;
 }
 
 .rc-tooltip-inner {
-  background-color: #be6464;
+  background-color: #BE6464;
   padding: 8px 10px 0px 10px;
 }
 
@@ -1358,9 +1389,6 @@ tbody::-webkit-scrollbar-track {
   cursor: pointer;
 }
 
-.sidebar-margin {
-  margin-left: 10px;
-}
 .action-btns {
   float: right;
 }
@@ -1450,6 +1478,16 @@ input[type="radio"] {
   width: 15px;
 }
 
+.survey-last-page {
+    font-size: 20px;
+	margin-bottom: 24px;
+}
+
+.question-intro-text {
+    font-size: 20px;
+	margin-bottom: 24px;
+}
+
 .choice {
   margin-bottom: 0;
   width: fit-content;
@@ -1461,8 +1499,12 @@ input[type="radio"] {
 }
 
 .survey-header {
-  color: white;
-  background-color: #53206e;
+  /*color: white;*/
+  /*background-color: #53206e;*/
   margin-top: 0;
   height: 70px;
 }
+
+.step1 ~ div.footer-buttons {
+  display: none;
+} 
