@@ -1,13 +1,12 @@
-import React, { Component } from 'react'
-import { getQuestions, updateQuestion, postQuestions } from '../../actions/patient'
-
-import { connect } from 'react-redux';
-import { Link, Redirect } from 'react-router-dom';
-import StepZilla from 'react-stepzilla';
-import { Line } from 'rc-progress';
-import Select from "react-select";
 import Tooltip from 'rc-tooltip';
+import Select from "react-select";
+import { Line } from 'rc-progress';
 import Header from '../auth/Header'
+import { connect } from 'react-redux';
+import React, { Component } from 'react'
+import StepZilla from 'react-stepzilla';
+import { Link, Redirect } from 'react-router-dom';
+import { getQuestions, updateQuestion, postQuestions } from '../../actions/patient'
 
 class Activate extends Component {
   constructor(props) {
@@ -31,7 +30,6 @@ class Activate extends Component {
       formValid: false,
       serverErrors: [],
       nextBtnCls: 'form-button center patient-next',
-
     }
 
     this.updateBtnCls = this.updateBtnCls.bind(this);
@@ -82,21 +80,22 @@ class Activate extends Component {
     const { serverErrors } = this.state;
 
     const steps = [
+      { name: 'FirstStep', component: <FirstStep patient={this.props.patient} step={this.state.step} /> },
       { name: 'SurveyQuestions', component: <SurveyQuestions questions={this.props.patient.questions} updateQuestion={this.props.updateQuestion} updateBtnCls={this.updateBtnCls} /> },
       // { name: 'TelemonitoringConfirmation', component: <TelemonitoringConfirmation step={this.state.step} updateTelemonitoring={this.updateTelemonitoring} newUser={this.state.newUser}/> },
-      { name: 'ConsentAcceptance', component: <ConsentAcceptance urlParams={this.props.match.params} answers={this.props.patient.questions} postQuestions={this.props.postQuestions} step={this.state.step} /> },
-      { name: 'FinalStep', component: <FinalStep patient={this.props.patient} step={this.state.step} /> }
+      // { name: 'ConsentAcceptance', component: <ConsentAcceptance urlParams={this.props.match.params} answers={this.props.patient.questions} postQuestions={this.props.postQuestions} step={this.state.step} /> },
+      { name: 'FinalStep', component: <FinalStep patient={this.props.patient} urlParams={this.props.match.params} answers={this.props.patient.questions} postQuestions={this.props.postQuestions} step={this.state.step} /> }
     ];
 
     return (
       <div>
         <div>
-          <p className="center signin survey-header">Telemonica Patient Survey</p>
-          </div>
+			<a href="/"><img className='dashboard-icon' src="static/frontend/images/icon.png" /></a>
+		</div>
         <div className="center-child survey-width">
           <div className={'loader ' + ((this.props.patient.isQuestionLoading)?'':'hide')}>Loading...</div>
           <span className={this.props.patient.isQuestionLoading?'hide':''}>
-          <StepZilla showSteps={false} nextButtonCls={this.state.nextBtnCls} backButtonCls="prev-btn" steps={steps} onStepChange={this.stepChange} startAtStep={0} nextTextOnFinalActionStep={"Accept"} ref={this.stepRef} nextBtnRef={this.nextBtnRef} />
+          <StepZilla showSteps={false} nextButtonCls={this.state.nextBtnCls} backButtonCls="prev-btn" steps={steps} onStepChange={this.stepChange} startAtStep={0} ref={this.stepRef} nextBtnRef={this.nextBtnRef} />
           </span>
           <label className="error-message">{serverErrors}</label>
           {/* <div className="line-progress">
@@ -105,6 +104,29 @@ class Activate extends Component {
         </div>
       </div>
     )
+  }
+}
+
+
+class FirstStep extends Component {
+
+  goBack() {
+    this.props.jumpToStep(this.props.step - 1);
+  }
+
+  goForward(){
+    this.props.jumpToStep(this.props.step + 1);
+  }
+
+  render() {
+      return (
+        <div className="step1">
+		  <div className="question-intro-text">
+          Welcome <b>{this.props.patient.full_name}</b>, thank you for connecting for your follow-up. Please start to answer the questions<br/>
+		  </div>
+          <div className="center"><button className="form-button center patient-next" onClick={()=>this.goForward()}>Start</button></div>
+        </div>
+      )
   }
 }
 
@@ -149,7 +171,9 @@ class SurveyQuestions extends Component {
   }
 
   componentDidMount() {
-    this.props.updateBtnCls('form-button center patient-next hide')
+    if(this.props.questions.length>1){
+      this.props.updateBtnCls('form-button center patient-next hide')
+    }
   }
 
   componentWillUnmount() {
@@ -174,7 +198,10 @@ class SurveyQuestions extends Component {
     if (steps.length > 0) {
       return (
         <div>
-          <StepZilla steps={steps} showSteps={false} nextButtonCls="form-button center register-next" backButtonCls="prev-btn" />
+		  <div>
+          		<p className="center signin survey-header">Please answer the following questions</p>
+          </div>
+          <StepZilla steps={steps} showSteps={false} nextButtonCls="form-button center register-next" nextTextOnFinalActionStep={"Accept"} backButtonCls="prev-btn" />
           <span className="notice">* All questions are mandatory</span>
         </div>
       )
@@ -249,6 +276,13 @@ class ConsentAcceptance extends Component {
 
 class FinalStep extends Component {
 
+  componentDidMount(){
+    const {uid, token} = this.props.urlParams
+
+    this.props.postQuestions(uid, token, this.props.answers)
+    return true;
+  }
+
   goBack() {
     this.props.jumpToStep(this.props.step - 1);
   }
@@ -257,10 +291,18 @@ class FinalStep extends Component {
 
     if (this.props.patient.isQuestionPosted) {
       return (
-        <h2>
-          Thank you for completing the survey.<br/><br/> 
-          Go to your  <Link to="/dashboard">dashboard</Link>
-        </h2>
+ <div>
+        <div class="survey-last-page">
+		  Thank you <b>{this.props.patient.full_name}</b> to have answer the questions. Your doctor will review your
+		  answers and contact you if necessary. You will receive your next questionnarie soon. You may now go
+		  to your portal or disconnect. We wish you a nice day.		  	  
+		</div>
+        <div className="center">
+		    <a href="/">
+		  	    <button className="form-button center patient-next" onClick={()=>this.goForward()}>Dashboard</button>
+  		    </a>
+		 </div>
+		  </div>
       )
     } else {
       return (
