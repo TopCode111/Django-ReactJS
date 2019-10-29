@@ -1,6 +1,8 @@
 ## Summary
-MVP for telemedicine, known as **Monica**.
-
+    
+    Django 2.2.3    
+    Rest framework 3.10.3
+        
 ## Instructions
 For running django backend
 
