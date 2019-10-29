@@ -1,9 +1,9 @@
-import React, { Component } from 'react'
-import { Link } from 'react-router-dom'
 import { connect } from 'react-redux';
-import { getProtocols, getPatients, deletePatient } from '../../../actions/patient';
+import { Link } from 'react-router-dom'
+import React, { Component } from 'react'
 import BootstrapTable from 'react-bootstrap-table-next';
 import ToolkitProvider, { CSVExport } from 'react-bootstrap-table2-toolkit';
+import { getProtocols, getPatients, deletePatient } from '../../../actions/patient';
 
 class PatientList extends Component {
 
@@ -21,11 +21,11 @@ class PatientList extends Component {
 
     render() {
         const columns = [{
-            dataField: 'name',
-            text: 'Name'
-        }, {
             dataField: 'alert',
             text: 'Alert'
+        }, {
+            dataField: 'name',
+            text: 'Name'
         }, {
             dataField: 'pname',
             text: 'Protocol'
@@ -137,6 +137,9 @@ class PatientList extends Component {
 		
         const { ExportCSVButton } = CSVExport;
 
+		const date = new Date().toISOString().slice(0,10).replace(/-/g,"");		
+		const file = "Telemonica_" + this.props.doctor.first_name + "_" + this.props.doctor.last_name + "_" + date + ".csv";
+		
         return (
             <ToolkitProvider
                 keyField="uniq"
@@ -144,7 +147,7 @@ class PatientList extends Component {
                 columns={columns}
 
                 exportCSV={{
-                    fileName: 'patients.csv',
+                    fileName: file,
                     separator: ',',
                     ignoreHeader: false,
                     noAutoBOM: false
@@ -153,8 +156,8 @@ class PatientList extends Component {
                     props => (
                         <div>
                             <div className={"left"} style={{marginTop:"40px"}}>
-                                <Link className="add-patient" to="/newpatient">+ Add</Link>
-                                <ExportCSVButton {...props.csvProps}>Export</ExportCSVButton>
+                                <Link className="add-patient" to="/newpatient">+ Add patient</Link>								
+                                <ExportCSVButton className='export-csv-button' {...props.csvProps}>Export data</ExportCSVButton>
                             </div>
 							<div style={{width:"100%"}}>
 								<BootstrapTable keyField='id' {...props.baseProps} expandRow={expandRow} />						
@@ -167,7 +170,7 @@ class PatientList extends Component {
 }
 
 const mapStateToProps = state => ({
-    patients: state.patientReducer.patients,
+    patients:  state.patientReducer.patients,
     protocols: state.patientReducer.protocols	
 });
 

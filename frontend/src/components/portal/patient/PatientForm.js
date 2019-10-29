@@ -156,7 +156,7 @@ class PatientRegisterStepOne extends Component {
         <div className="validation-input">
 
           <div className="date">
-            <Select name={"date"} value={this.props.newUser.date} onChange={this.props.onDateChange} isSearchable={false} isClearable={false} classNamePrefix="date-single" options={dates} placeholder={'Date'} />
+            <Select name={"date"} value={this.props.newUser.date} onChange={this.props.onDateChange} isSearchable={false} isClearable={false} classNamePrefix="date-single" options={dates} placeholder={'Date'} menuPlacement="top"/>
             <span className={'checkmark date-select-checkmark ' + ((this.props.validation.date) ? '' : 'hide')}>
               <div className="checkmark_circle"></div>
               <div className="checkmark_stem"></div>
@@ -169,7 +169,7 @@ class PatientRegisterStepOne extends Component {
             </span>
           </div>
           <div className="month">
-            <Select name={"month"} value={this.props.newUser.month} onChange={this.props.onMonthChange} isSearchable={false} isClearable={false} classNamePrefix="month-single" options={months} placeholder={'Month'} />
+            <Select name={"month"} value={this.props.newUser.month} onChange={this.props.onMonthChange} isSearchable={false} isClearable={false} classNamePrefix="month-single" options={months} placeholder={'Month'} menuPlacement="top"/>
             <span className={'checkmark month-select-checkmark ' + ((this.props.validation.month) ? '' : 'hide')}>
               <div className="checkmark_circle"></div>
               <div className="checkmark_stem"></div>
@@ -192,7 +192,7 @@ class PatientRegisterStepOne extends Component {
                 <div>{this.props.formErrors.year}</div>
               </span>}
             >
-              <Select name={"year"} value={this.props.newUser.year} onChange={this.props.onYearChange} isSearchable={false} isClearable={false} classNamePrefix="year-single" options={years} placeholder={'Year'} />
+              <Select name={"year"} value={this.props.newUser.year} onChange={this.props.onYearChange} isSearchable={false} isClearable={false} classNamePrefix="year-single" options={years} placeholder={'Year'} menuPlacement="top"/>
             </Tooltip>
             <span className={'checkmark year-select-checkmark ' + ((this.props.validation.year) ? '' : 'hide')}>
               <div className="checkmark_circle"></div>
@@ -388,8 +388,24 @@ class PatientRegisterStepSix extends Component {
 
 class PatientRegisterStepSeven extends Component {
 
+  constructor(props) {
+    super(props);
+    this.state = {
+      date: ''
+    }
+  }
+
   goBack() {
     this.props.jumpToStep(this.props.step - 1);
+  }
+
+  componentDidUpdate(prevProps){
+    const props  = this.props
+    if (props !== prevProps){
+      let d = new Date()
+      d.setMinutes(d.getMinutes()+5)
+      this.setState({date: d.toLocaleString()})
+    }
   }
 
   render() {
@@ -397,7 +413,7 @@ class PatientRegisterStepSeven extends Component {
     if (this.props.newPatient) {
       return (
         <h2>
-          Patient with name {this.props.newPatient.user.first_name} has been registered successfully.<br/><br/> Go to your  <Link to="/dashboard">dashboard</Link>
+          You have now registered {this.props.newPatient.user.first_name} {this.props.newPatient.user.last_name} to the protocol {this.props.protocol}. {this.props.newPatient.user.first_name} {this.props.newPatient.user.last_name} will receive the first questionnaire on {this.state.date}. You may now go back to your <Link to="/dashboard">dashboard</Link>.
         </h2>
       )
     } else {
@@ -821,12 +837,13 @@ export class PatientRegister extends Component {
       // { name: 'PatientRegisterStepFour', component: <PatientRegisterStepFour step={this.state.step} newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} validateField={this.validateField} updateTelemonitoring={this.updateTelemonitoring} /> },
       // { name: 'PatientRegisterStepFive', component: <PatientRegisterStepFive step={this.state.step} newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} /> },
       { name: 'PatientRegisterStepSix', component: <PatientRegisterStepSix step={this.state.step} newUser={this.state.newUser} validation={this.state.validation} formErrors={this.state.formErrors} onChange={this.onChange} validateField={this.validateField} isAuthenticated={isAuthenticated} extras={this.state.extras} patientRegister={this.props.patientRegister} questions={this.props.patient.questions}/> },
-      { name: 'PatientRegisterStepSeven', component: <PatientRegisterStepSeven step={this.state.step} newPatient={this.props.auth.newPatient} isAuthenticated={isAuthenticated} /> }
+      { name: 'PatientRegisterStepSeven', component: <PatientRegisterStepSeven step={this.state.step} protocol={this.state.newUser.protocol.label} newPatient={this.props.auth.newPatient} isAuthenticated={isAuthenticated} /> }
     ];
 
     return (
       <div>
-        <Header shouldShowBack={(this.state.step !== 0) && !isAuthenticated} backToStep={this.backToStep} stepRef={this.stepRef} />
+		<img className='dashboard-icon' src="static/frontend/images/icon.png" />
+        <Header showRight={false} shouldShowBack={(this.state.step !== 0) && !isAuthenticated} backToStep={this.backToStep} stepRef={this.stepRef} />
         
         <div className="center-child register-width">
           <p className="center signin">Add Patient</p>
