@@ -7,7 +7,7 @@ verify_ssl = true
 autopep8 = "*"
 
 [packages]
-django = "==2.2.3"
+django = "==2.2.8"
 djangorestframework = "*"
 django-rest-knox = "*"
 
