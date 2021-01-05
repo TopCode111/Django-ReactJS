@@ -28,7 +28,7 @@
     "webpack-cli": "^3.3.5"
   },
   "dependencies": {
-    "axios": "^0.19.0",
+    "axios": "^0.21.1",
     "promise": "^8.0.3",
     "prop-types": "^15.7.2",
     "rc-progress": "^2.5.1",
